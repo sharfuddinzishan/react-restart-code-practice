@@ -40,19 +40,19 @@ const UpdateInfo = () => {
     //     }
     // }
 
-        const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
+     const handleInput = e => {
+        const copyInfo = { ...getInfo };
+        copyInfo[e.target.name] = e.target.value;
+        setInfo(copyInfo);
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault();
         setSuccess(false)
         setError(false)
-         const copyInfo = { ...getInfo };
-        copyInfo['name'] = e.target.name.value;
-        copyInfo['age'] = e.target.age.value;
-        setInfo(copyInfo);
-        console.log(getInfo)
         axios.put(`http://localhost:4000/info`, getInfo)
             .then(result => {
                 if (!result?.data?.modifiedCount) { setError(true) }
@@ -89,6 +89,7 @@ const UpdateInfo = () => {
                                 type="text"
                                 id="name"
                                 name="name"
+                                onBlur={handleInput}
                                 defaultValue={getInfo?.name}
                             />
 
@@ -97,7 +98,8 @@ const UpdateInfo = () => {
                                 type="number"
                                 id="age"
                                 name="age"
-                                 defaultValue={getInfo?.age}
+                                onBlur={handleInput}
+                                defaultValue={getInfo?.age}
                             />
                     <button>Update Info</button>
                 </form>
