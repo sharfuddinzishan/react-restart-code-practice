@@ -59,7 +59,9 @@ const UpdateInfo = () => {
                 else { setSuccess(true) }
             })
             .catch(e => setError(true))
-            .finally(() => {})
+            .finally(() => {
+                navigate('/');
+            })
     };
 
     return (
